@@ -14,21 +14,13 @@ export default function LobbyPage() {
   useEffect(() => {
     loadTeams()
 
-    // Setup WebSocket for real-time updates
-    // const ws = new WebSocket("ws://localhost:8000/ws/leaderboard")
-    const ws = new WebSocket("ws://rahul-samedavar-minetheflagbe.hf.space/ws/leaderboard")
-    ws.onopen = () => {
-      ws.send("ping")
-    }
-
-    ws.onmessage = () => {
+    const interval = setInterval(() => {
       loadTeams()
-    }
+    }, 60000)
 
-    return () => {
-      ws.close()
-    }
+    return () => clearInterval(interval)
   }, [])
+
 
   const loadTeams = async () => {
     try {

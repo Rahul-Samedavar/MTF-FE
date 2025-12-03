@@ -10,38 +10,16 @@ export default function LeaderboardPage() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+ useEffect(() => {
+  loadLeaderboard()
+
+  const interval = setInterval(() => {
     loadLeaderboard()
+  }, 60000)
 
-    // Setup WebSocket for real-time updates
-    // const ws = new WebSocket("ws://localhost:8000/ws/leaderboard")
-    const ws = new WebSocket("ws://rahul-samedavar-minetheflagbe.hf.space/ws/leaderboard")
+  return () => clearInterval(interval)
+}, [])
 
-    ws.onopen = () => {
-      console.log("[v0] WebSocket connected")
-      ws.send("ping")
-    }
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data)
-      console.log("[v0] WebSocket message:", data)
-
-      if (data.type === "leaderboard") {
-        setLeaderboard(data.data)
-      } else if (data.type === "submission") {
-        // Reload leaderboard on new submission
-        loadLeaderboard()
-      }
-    }
-
-    ws.onerror = (error) => {
-      console.error("[v0] WebSocket error:", error)
-    }
-
-    return () => {
-      ws.close()
-    }
-  }, [])
 
   const loadLeaderboard = async () => {
     try {
