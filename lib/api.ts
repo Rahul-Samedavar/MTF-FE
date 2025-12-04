@@ -64,7 +64,8 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ detail: "Unknown error" }))
-    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`)
+    console.log(Error(errorData.detail || `HTTP error! status: ${response.status}`))
+    return {} as T;
   }
 
   // Handle empty responses (like 204)

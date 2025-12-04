@@ -11,7 +11,7 @@ import { apiRequest } from "@/lib/api"
 import { toast } from "sonner"
 import { Flag, BookOpen } from "lucide-react"
 
-export default function ProblemCoinChangePage() {
+export default function ProblemLISPage() {
   const [flag, setFlag] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const [result, setResult] = useState<{ ok: boolean; reason?: string } | null>(null)
@@ -27,7 +27,7 @@ export default function ProblemCoinChangePage() {
       const response = await apiRequest<{ ok: boolean; reason?: string }>("/submit", {
         method: "POST",
         body: JSON.stringify({
-          problem_id: 2, // Coin Change Problem
+          problem_id: 4, // LIS Problem
           flag: flag,
         }),
       })
@@ -36,7 +36,7 @@ export default function ProblemCoinChangePage() {
       setResult(response)
 
       if (response.ok) {
-        toast.success("Correct flag! Fewest coins calculated successfully!")
+        toast.success("Correct flag! LIS length computed successfully!")
         setFlag("")
       } else {
         toast.error("Incorrect flag. Try again!")
@@ -60,22 +60,22 @@ export default function ProblemCoinChangePage() {
       <div className="space-y-6 max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-yellow-600/20 border-4 border-black flex items-center justify-center animate-pulse">
-            <BookOpen className="w-8 h-8 text-yellow-400" />
+          <div className="w-12 h-12 bg-blue-600/20 border-4 border-black flex items-center justify-center animate-pulse">
+            <BookOpen className="w-8 h-8 text-blue-400" />
           </div>
           <div>
             <h1 className="text-3xl font-bold text-white text-shadow-mc">
-              Coin Change
+              Longest Increasing Subsequence (LIS)
             </h1>
             <div className="flex gap-2 mt-2">
               <span className="px-2 py-1 bg-stone-900 border-2 border-stone-700 text-xs text-stone-400">
                 Dynamic Programming
               </span>
-              <span className="px-2 py-1 bg-yellow-900/50 border-2 border-yellow-600 text-xs font-bold text-yellow-300">
-                Medium
+              <span className="px-2 py-1 bg-blue-900/50 border-2 border-blue-600 text-xs font-bold text-blue-300">
+                Hard
               </span>
               <span className="px-2 py-1 bg-mc-green border-2 border-black text-xs font-bold text-white">
-                200 POINTS
+                300 POINTS
               </span>
             </div>
           </div>
@@ -85,27 +85,23 @@ export default function ProblemCoinChangePage() {
         <MCCard title="DESCRIPTION">
           <div className="space-y-4 text-stone-300 leading-relaxed">
             <p>
-              You are given an integer array <code>coins</code> representing coins of different denominations,
-              and an integer <code>amount</code>.  
-              Return the <strong>fewest number of coins</strong> required to make up that amount.  
-              If it's impossible to form the amount, return <code>-1</code>.  
-              Assume an infinite supply of each coin type.
+              Given an integer array <code>nums</code>, find the <strong>length of the longest strictly increasing subsequence</strong>.
+              A subsequence is derived from the array by deleting some elements (possibly none) without changing the order of the remaining elements.
             </p>
 
             <div className="bg-stone-900 border-2 border-stone-700 p-4 mt-4">
-              <p className="text-yellow-400 font-bold text-sm mb-2">INPUT FORMAT:</p>
+              <p className="text-blue-400 font-bold text-sm mb-2">INPUT FORMAT:</p>
               <MCCodeBlock
                 language="typescript"
-                code={`coins: number[] // denominations
-amount: number // total amount to form`}
+                code={`nums: number[] // integer array`}
               />
             </div>
 
             <div className="bg-stone-900 border-2 border-stone-700 p-4 mt-4">
-              <p className="text-yellow-400 font-bold text-sm mb-2">OUTPUT:</p>
+              <p className="text-blue-400 font-bold text-sm mb-2">OUTPUT:</p>
               <MCCodeBlock
                 language="typescript"
-                code={`number // minimum number of coins needed, or -1 if impossible`}
+                code={`number // length of the longest strictly increasing subsequence`}
               />
             </div>
           </div>
@@ -116,19 +112,19 @@ amount: number // total amount to form`}
           <MCCodeBlock
             language="text"
             code={`Example 1:
-Input: coins = [1, 2, 5], amount = 11
-Output: 3
-Explanation: 11 = 5 + 5 + 1
+Input: nums = [10,9,2,5,3,7,101,18]
+Output: 4
+Explanation: LIS is [2,3,7,101]
 
 Example 2:
-Input: coins = [2], amount = 3
-Output: -1
-Explanation: impossible to form 3 using only 2
+Input: nums = [0,1,0,3,2,3]
+Output: 4
+Explanation: LIS is [0,1,2,3]
 
 Example 3:
-Input: coins = [1], amount = 0
-Output: 0
-Explanation: no coins needed`}
+Input: nums = [7,7,7,7,7,7,7]
+Output: 1
+Explanation: All elements are the same`}
           />
         </MCCard>
 
@@ -136,10 +132,11 @@ Explanation: no coins needed`}
         <MCCard title="NOTES">
           <div className="space-y-2 text-stone-300 text-sm">
             <ul className="list-disc ml-6">
-              <li>You have an infinite number of each coin type.</li>
-              <li>1 ≤ coins.length ≤ 12</li>
-              <li>1 ≤ coins[i] ≤ 2³¹ - 1</li>
-              <li>0 ≤ amount ≤ 10⁴</li>
+              <li>The subsequence does not need to be contiguous.</li>
+              <li>Binary search optimization can give O(n log n) complexity.</li>
+              <li>Dynamic Programming alone gives O(n²) complexity, acceptable for n ≤ 2500.</li>
+              <li>1 ≤ nums.length ≤ 2500</li>
+              <li>-10⁴ ≤ nums[i] ≤ 10⁴</li>
             </ul>
           </div>
         </MCCard>
@@ -149,7 +146,7 @@ Explanation: no coins needed`}
           {result && (
             <MCAlert
               type={result.ok ? "success" : "error"}
-              message={result.ok ? "Correct! Fewest coins computed successfully." : `Incorrect: ${result.reason || "Try again"}`}
+              message={result.ok ? "Correct! LIS length computed successfully." : `Incorrect: ${result.reason || "Try again"}`}
               className="mb-4"
             />
           )}

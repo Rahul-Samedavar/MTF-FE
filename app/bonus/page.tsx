@@ -7,17 +7,24 @@ import { Lock, Unlock, Star } from "lucide-react"
 import Link from "next/link"
 
 export default function BonusPage() {
-  const [unlockedLevel, setUnlockedLevel] = useState(1)
+  const [unlockedLevel, setUnlockedLevel] = useState(2)
 
   useEffect(() => {
     const level = Number.parseInt(localStorage.getItem("bonus_level_unlocked") || "1")
-    setUnlockedLevel(level)
+    setUnlockedLevel(2)
   }, [])
 
+
   const levels = [
-    { id: 1, title: "The Hidden Biome", description: "Find the glitch in the terrain generation code." },
-    { id: 2, title: "The Ender Dragon's Secret", description: "Decrypt the dragon's roar to find the final flag." },
-  ]
+  {
+    "id": 1,
+    "title": "Shortest Path in Minecraft Village",
+    "difficulty": "Hard",
+    "points": 250,
+    "category": "Debugging",
+    "description": "Debug and fix a faulty Dijkstra implementation to compute the minimum travel cost from a source node to all nodes in a Minecraft village represented as a weighted adjacency matrix. Handle directed or undirected graphs correctly and return Integer.MAX_VALUE for unreachable nodes."
+  }
+]
 
   return (
     <MCLayout>
@@ -65,7 +72,7 @@ export default function BonusPage() {
                     {isUnlocked ? (
                       <Link href={`/bonus/${level.id}`}>
                         <MCButton variant={isCompleted ? "success" : "default"}>
-                          {isCompleted ? "REPLAY" : "START"}
+                          {isCompleted ? "START" : "START"}
                         </MCButton>
                       </Link>
                     ) : (

@@ -9,6 +9,7 @@ import { ProceduralBackground } from "@/components/minecraft/background"
 import { MCAlert } from "@/components/minecraft/alert"
 import { apiRequest, setAuthToken } from "@/lib/api"
 import { toast } from "sonner"
+import { MCLayout } from "@/components/minecraft/layout"
 
 export default function HomePage() {
   const router = useRouter()
@@ -82,7 +83,10 @@ export default function HomePage() {
   }
 
   return (
+          <MCLayout>
     <div className="min-h-screen flex items-center justify-center p-4 relative">
+  
+
       <ProceduralBackground />
 
       <div className="w-full max-w-md z-10">
@@ -193,5 +197,6 @@ export default function HomePage() {
         </div>
       </div>
     </div>
+      </MCLayout>
   )
 }

@@ -16,51 +16,145 @@ import { useEffect, useState } from "react";
 const problems = [
   {
     id: 1,
-    title: "Hamming Weights",
-    difficulty: "Easy",
-    points: 100,
+    title: "Min-Cost climbing stairs",
+    difficulty: "Medium",
+    points: 150,
     category: "Normal",
-    description: "Find the count of 1's in binary",
+    description: "Find the minimum cost to climb the stairs.",
   },
   {
     id: 2,
-    title: "Redstone Circuit",
+    title: "Coin Change",
     difficulty: "Medium",
     points: 200,
-    category: "Debugging",
-    description: "Reverse engineer the redstone encoding algorithm.",
+    category: "Normal",
+    description:
+      "Given coins of different denominations and a total amount, compute the fewest number of coins needed to make that amount. Return -1 if it cannot be formed.",
   },
   {
     id: 3,
-    title: "Mystery Function",
-    difficulty: "Hard",
-    points: 300,
-    category: "Function Reversal",
-    description: "Determine what this obfuscated function does.",
+    title: "Letter Combinations of a Phone Number",
+    difficulty: "Medium",
+    points: 200,
+    category: "Normal",
+    description:
+      "Given a string of digits 2-9, return all possible letter combinations that the number could represent.",
   },
   {
     id: 4,
-    title: "Path Finder",
-    difficulty: "Medium",
-    points: 250,
-    category: "Algorithm",
-    description: "Optimize the pathfinding algorithm for efficiency.",
+    title: "Longest Increasing Subsequence (LIS)",
+    difficulty: "Hard",
+    points: 300,
+    category: "Normal",
+    description:
+      "Given an integer array nums, find the length of the longest strictly increasing subsequence.",
   },
   {
     id: 5,
-    title: "Simple Cipher",
+    title: "Count Creepers — Case Closed",
     difficulty: "Easy",
-    points: 150,
-    category: "Normal",
-    description: "Decode a basic encryption scheme.",
+    points: 50,
+    category: "Debugging",
+    description:
+      "Fix the buggy function that incorrectly counts how many mobs are creepers.",
   },
   {
     id: 6,
-    title: "Memory Leak Hunt",
-    difficulty: "Hard",
-    points: 350,
+    title: "Biome Stretch Analyzer",
+    difficulty: "Medium",
+    points: 100,
     category: "Debugging",
-    description: "Find and fix the memory leak in the server code.",
+    description:
+      "Fix the buggy implementation that calculates the longest continuous biome stretch.",
+  },
+  {
+    id: 7,
+    title: "Student Ranking Debugger",
+    difficulty: "Medium",
+    points: 150,
+    category: "Debugging",
+    description:
+      "Fix the faulty ranking logic so students with equal marks receive the same rank while maintaining proper rank progression.",
+  },
+  {
+    id: 8,
+    title: "Optimal Minecraft Resource Collector",
+    difficulty: "Hard",
+    points: 200,
+    category: "Debugging",
+    description:
+      "Compute the maximum resources Steve can gather from multiple regions while ensuring he does not pick the same resource type in consecutive regions.",
+  },
+  {
+    id: 11,
+    title: "Back to School",
+    difficulty: "Easy",
+    points: 75,
+    category: "Reverse Engineering",
+    description:
+      "Recover the original inputs by reversing a linear transformation.",
+  },
+
+  {
+    id: 12,
+    title: "Duet",
+    difficulty: "Easy",
+    points: 100,
+    category: "Reverse Engineering",
+    description:
+      "Invert a pairwise linear transform that mixes values using addition and subtraction.",
+  },
+
+  {
+    id: 13,
+    title: "Triple Twist",
+    difficulty: "Medium",
+    points: 200,
+    category: "Reverse Engineering",
+    description:
+      "Undo a three-way string permutation by reconstructing the original sequence from interleaved slices.",
+  },
+
+  {
+    id: 14,
+    title: "Foot-Steps",
+    difficulty: "Medium",
+    points: 250,
+    category: "Reverse Engineering",
+    description:
+      "Undo a multi-stage in-place transformation by reversing each step in exact order.",
+  },
+  {
+    id: 16,
+    title: "Minimum flips",
+    difficulty: "Easy",
+    points: 50,
+    category: "Algorithm",
+    description: "find the smaller of the two flip counts.",
+  },
+  {
+    id: 17,
+    title: "Remove characte",
+    difficulty: "Easy",
+    points: 50,
+    category: "Algorithm",
+    description: "remove the 2 string from 1st",
+  },
+  {
+    id: 18,
+    title: "Length of Last Word",
+    difficulty: "Easy",
+    points: 50,
+    category: "Algorithm",
+    description: "find the length of last word",
+  },
+  {
+    id: 19,
+    title: "Reverse & Odd-Even Casing",
+    difficulty: "Easy",
+    points: 50,
+    category: "Algorithm",
+    description: "Reverse the String",
   },
 ];
 
@@ -83,7 +177,7 @@ const categoryConfig = {
     iconBg: "bg-red-600",
     description: "Find and fix bugs in existing code",
   },
-  "Function Reversal": {
+  "Reverse Engineering": {
     icon: RotateCcw,
     color: "purple",
     bgClass: "bg-purple-900/30",
@@ -113,10 +207,13 @@ export default function ProblemsPage() {
 
   const fetchSolvedProblems = async () => {
     try {
-      const response = await apiRequest<{ok: Boolean, x: [number] }>("/team/solved", {
-        method: "POST",
-        body: JSON.stringify({}),
-      });
+      const response = await apiRequest<{ ok: Boolean; x: [number] }>(
+        "/team/solved",
+        {
+          method: "POST",
+          body: JSON.stringify({}),
+        }
+      );
 
       console.log("Fetched Solved Prbls");
       console.log(response);
